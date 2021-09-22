@@ -5,15 +5,17 @@
 
 ## 注意事项
 - 在本包中初始化向量是随机生成的指定长度字符串，需要自行接收处理，解密时需要用到
-
+- aes 加密 key 需要指定16个字节长度的字符切片
+- des 加密 key 需要指定8个字节长度的字符切片
+- 无论哪种方式的加密在解密的时候使用的key 和iv 都必须要与加密时使用的key 和iv 一致
 
 ## 数据加解密包使用方法
 - 加密：
-    1. 创建des 加密实例：name := NewDesCipher(key[与加密是秘钥byte切片相同])
-    2. 开始加密数据，使用name.DesEncrypt(src[数据源信息])会返回密文和初始向量字符串
+    1. 创建des 加密实例：name := NewDesCipher(key)
+    2. 开始加密数据，使用name.DesEncrypt([]byte(加密数据))会返回密文和初始向量字符串
 - 解密：
-    1. 创建des 解密实例：name := NewDesCipher(key[与加密是秘钥byte切片相同])
-    2. 开始解密数据，deserDe.DesDecrypt(cipherText[密文],iv[初始向量IV，必须与加密是的初始向量相同])
+    1. 创建des 解密实例：name := NewDesCipher(key)
+    2. 开始解密数据，deserDe.DesDecrypt(cipherText[密文],iv[加密函数第二个返回值就是iv])
   
 - 包使用代码示例：
 ```go
